@@ -25,6 +25,7 @@ contract Borda is IBorda{
         require(!_voted[msg.sender], "this voter has already cast its vote");
         require( f != s && f != t && s != t, "candidates are not different");
         _voted[msg.sender] = true;
+        // @> blacklisted mechanism not required
         require( f != _blacklisted &&  s != _blacklisted ); 
         voteTo(f, 3);
         voteTo(s, 2);

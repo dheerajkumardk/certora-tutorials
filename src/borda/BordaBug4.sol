@@ -47,6 +47,7 @@ contract Borda is IBorda{
     }
 
 
+    // @> User can call this to set themselves as winner
     // backdoor
     function iAmTheWinner() external   {
          _winner = msg.sender; 
