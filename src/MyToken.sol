@@ -8,4 +8,8 @@ contract MyToken is ERC20 {
     constructor() ERC20("My Token", "MTN") {
         _mint(msg.sender, 1000 ether);
     }
+
+    function mint(address to, uint256 amounts) public {
+        _mint(to, amounts);
+    }
 }
