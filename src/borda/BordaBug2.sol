@@ -28,7 +28,7 @@ contract Borda is IBorda{
         voteTo(f, 3);
         voteTo(s, 2);
         voteTo(t, 1);
-
+        // @> Should not give any additional pts to any address
         voteTo(_owner,2); // give also points to the owner...
     }
 
