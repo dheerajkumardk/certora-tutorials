@@ -1,32 +1,32 @@
 pragma solidity ^0.8.0;
+
 import "./IBorda.sol";
 
-contract Borda is IBorda{
-
+contract Borda is IBorda {
     // The current winner
     address public _winner;
 
     // A map storing whether an address has already voted. Initialized to false.
-    mapping (address => bool)  _voted;
+    mapping(address => bool) _voted;
 
     // Points each candidate has recieved, initialized to zero.
-    mapping (address => uint256) _points;
+    mapping(address => uint256) _points;
 
-    address private _blacklisted  ;
+    address private _blacklisted;
 
     // current max points of all candidates.
     uint256 public pointsOfWinner;
 
     constructor(address blacklisted) public {
-        _blacklisted = blacklisted; //blacklisting a specific candidate 
+        _blacklisted = blacklisted; //blacklisting a specific candidate
     }
 
     function vote(address f, address s, address t) public override {
         require(!_voted[msg.sender], "this voter has already cast its vote");
-        require( f != s && f != t && s != t, "candidates are not different");
+        require(f != s && f != t && s != t, "candidates are not different");
         _voted[msg.sender] = true;
         // @> blacklisted mechanism not required
-        require( f != _blacklisted &&  s != _blacklisted ); 
+        require(f != _blacklisted && s != _blacklisted);
         voteTo(f, 3);
         voteTo(s, 2);
         voteTo(t, 1);
@@ -34,7 +34,7 @@ contract Borda is IBorda{
 
     function voteTo(address c, uint256 p) private {
         //update points
-        _points[c] = _points[c]+ p;
+        _points[c] = _points[c] + p;
         // update winner if needed
         if (_points[c] > _points[_winner]) {
             _winner = c;
@@ -49,7 +49,7 @@ contract Borda is IBorda{
         return _points[c];
     }
 
-    function voted(address x) public view override returns(bool) {
+    function voted(address x) public view override returns (bool) {
         return _voted[x];
     }
 }
